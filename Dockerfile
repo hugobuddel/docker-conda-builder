@@ -34,7 +34,7 @@ RUN --mount=type=secret,id=conda_download_key /opt/conda/bin/conda \
     cx_oracle instantclient \
     bpz galfit galphot htm ldac ltl mdia \
     ccfits cdsclient cosmicfits eclipse \
-    photz psfex pyfits scamp sextractor \
+    photz psfex scamp sextractor \
     shapelets stiff stsci.distutils swarp vodia wcslib \
     pytest pytest-cov mock psycopg2 \
     common
