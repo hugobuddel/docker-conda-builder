@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:experimental
 FROM centos:7
 
 LABEL maintainer="teake.nutma@gmail.com"
@@ -25,6 +26,18 @@ RUN curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     /opt/conda/bin/conda install --yes conda-build conda-verify && \
     /opt/conda/bin/conda clean -tipsy && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
+# Fetch several useful packages
+RUN --mount=type=secret,id=conda_download_key /opt/conda/bin/conda \
+    install \
+    -c https://$(cat /run/secrets/conda_download_key)@conda.astro-wise.org \
+    numpy matplotlib python-dateutil astropy \
+    cx_oracle instantclient \
+    bpz galfit galphot htm ldac ltl mdia \
+    ccfits cdsclient cosmicfits eclipse \
+    photz psfex pyfits scamp sextractor \
+    shapelets stiff stsci.distutils swarp vodia wcslib \
+    pytest pytest-cov mock psycopg2 \
+    common
 
 # Add a shell script that activates conda ...
 COPY entrypoint.sh /opt/docker/bin/entrypoint.sh
